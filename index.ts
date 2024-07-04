@@ -18,7 +18,6 @@ interface AnimalSpecies {
   needsWaterSource: boolean; // Необходимо ли наличие водоема
   requiredAreaPerIndividual: number; // Необходимая площадь на особь
   diet: Diet; // Что животное ест
-  /**травоядное ли */
   isHerbivore: boolean; // Является ли животное травоядным
 }
 
@@ -85,7 +84,8 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1000,
     diet: 'herbivore',
-    isHerbivore: true
+    isHerbivore:true,
+
   },
   {
     name: 'Леопард',
@@ -93,7 +93,8 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1100,
     diet: 'carnivore',
-    isHerbivore: false
+    isHerbivore:false,
+
   },
   {
     name: 'Фламинго',
@@ -101,7 +102,8 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 100,
     diet: 'herbivore',
-    isHerbivore: true
+    isHerbivore:true
+
   },
   {
     name: 'Бизон',
@@ -109,7 +111,8 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1400,
     diet: 'herbivore',
-    isHerbivore: true
+    isHerbivore:true
+
   },
   {
     name: 'Тигр',
@@ -117,7 +120,8 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1000,
     diet: 'carnivore',
-    isHerbivore: false
+    isHerbivore:false,
+
   },
   {
     name: 'Капибара',
@@ -125,7 +129,8 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1000,
     diet: 'herbivore',
-    isHerbivore: true
+    isHerbivore:true
+
   },
   {
     name: 'Сурикат',
@@ -133,7 +138,8 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: false,
     requiredAreaPerIndividual: 1200,
     diet: 'carnivore',
-    isHerbivore: false
+    isHerbivore:false
+
   },
   {
     name: 'Варан',
@@ -141,7 +147,8 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: false,
     requiredAreaPerIndividual: 1700,
     diet: 'carnivore',
-    isHerbivore: false
+    isHerbivore:false
+
   },
   {
     name: 'Верблюд',
@@ -149,7 +156,8 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: false,
     requiredAreaPerIndividual: 100,
     diet: 'herbivore',
-    isHerbivore: true
+    isHerbivore:true
+
   },
 ]
 
@@ -273,7 +281,12 @@ const settleOrRemoveAnimalFromTheEnclosure = (animal: IndividualAnimal, enclosur
 
     if (isPossible) {
       enclosure.animal.push(animal);
+
+      enclosure.area -= animal.species.requiredAreaPerIndividual;
+
       console.log(`${animal.name} было добавлено в вольер ${enclosure.biome}`);
+    } else {
+      console.error(`Не удалось добавить ${animal.name} в вольер ${enclosure.biome}. Причина: не хватает места.`);
     }
   } else if (action === "delete") {
     const index = enclosure.animal.findIndex((enclosureAnimal) => enclosureAnimal.id === animal.id);
