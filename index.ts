@@ -18,7 +18,6 @@ interface AnimalSpecies {
   needsWaterSource: boolean; // Необходимо ли наличие водоема
   requiredAreaPerIndividual: number; // Необходимая площадь на особь
   diet: Diet; // Что животное ест
-  isHerbivore: boolean; // Является ли животное травоядным
 }
 
 // Интерфейс для описания конкретного животного
@@ -84,7 +83,6 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1000,
     diet: 'herbivore',
-    isHerbivore:true,
 
   },
   {
@@ -93,7 +91,6 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1100,
     diet: 'carnivore',
-    isHerbivore:false,
 
   },
   {
@@ -102,8 +99,6 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 100,
     diet: 'herbivore',
-    isHerbivore:true
-
   },
   {
     name: 'Бизон',
@@ -111,8 +106,6 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1400,
     diet: 'herbivore',
-    isHerbivore:true
-
   },
   {
     name: 'Тигр',
@@ -120,7 +113,6 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1000,
     diet: 'carnivore',
-    isHerbivore:false,
 
   },
   {
@@ -129,8 +121,6 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: true,
     requiredAreaPerIndividual: 1000,
     diet: 'herbivore',
-    isHerbivore:true
-
   },
   {
     name: 'Сурикат',
@@ -138,8 +128,6 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: false,
     requiredAreaPerIndividual: 1200,
     diet: 'carnivore',
-    isHerbivore:false
-
   },
   {
     name: 'Варан',
@@ -147,8 +135,6 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: false,
     requiredAreaPerIndividual: 1700,
     diet: 'carnivore',
-    isHerbivore:false
-
   },
   {
     name: 'Верблюд',
@@ -156,8 +142,6 @@ const animalSpecies: AnimalSpecies[] = [
     needsWaterSource: false,
     requiredAreaPerIndividual: 100,
     diet: 'herbivore',
-    isHerbivore:true
-
   },
 ]
 
@@ -249,9 +233,9 @@ function isPossibleToPlaceAnimalInEnclosure(animal: IndividualAnimal, enclosure:
 
   // Проверка на возможность совместного проживания разных видов
 
-  const hasPredators = enclosure.animal.some((_animal) => _animal.species.isHerbivore === false);
+  const hasPredators = enclosure.animal.some((_animal) => _animal.species.diet === 'carnivore');
 
-  if ((animal.species.isHerbivore === true) && hasPredators) {
+  if ((animal.species.diet === 'herbivore') && hasPredators) {
     cause.push('Травоядное животное не может жить с хищником');
   }
 
@@ -277,8 +261,6 @@ const settleOrRemoveAnimalFromTheEnclosure = (animal: IndividualAnimal, enclosur
   if (action === 'settle') {
     const { cause, isPossible } = isPossibleToPlaceAnimalInEnclosure(animal, enclosure);
 
-    console.log({ cause, isPossible });
-
     if (isPossible) {
       enclosure.animal.push(animal);
 
@@ -286,13 +268,14 @@ const settleOrRemoveAnimalFromTheEnclosure = (animal: IndividualAnimal, enclosur
 
       console.log(`${animal.name} было добавлено в вольер ${enclosure.biome}`);
     } else {
-      console.error(`Не удалось добавить ${animal.name} в вольер ${enclosure.biome}. Причина: не хватает места.`);
+      console.error(`Не удалось добавить ${animal.name} в вольер ${enclosure.biome}. Причины: ${cause.join(', ')}.`);
     }
   } else if (action === "delete") {
     const index = enclosure.animal.findIndex((enclosureAnimal) => enclosureAnimal.id === animal.id);
 
     if (index !== -1) {
-      enclosure.animal.splice(index, 1)
+      enclosure.animal.splice(index, 1);
+      enclosure.area += animal.species.requiredAreaPerIndividual;
       console.log(`${animal.name} было удалено из вольера`);
     }
   }
