@@ -9,6 +9,7 @@ interface Enclosure {
   area: number; // Площадь вольера
   waterSource: boolean; // Наличие водоема в вольере
   animal: IndividualAnimal[];
+
 }
 
 // Интерфейс для описания вида животных
@@ -27,6 +28,7 @@ interface IndividualAnimal {
   dailyFoodConsumption: number; // Сколько животное съедает в день
   typeFood: Food;
   id: number;
+  photo: string
 }
 interface IsPossibleToPlaceAnimalInEnclosure {
   isPossible: boolean;
@@ -152,63 +154,72 @@ const individualAnimals: IndividualAnimal[] = [
     species: animalSpecies[0],
     name: 'Машка',
     dailyFoodConsumption: 70,
-    typeFood: "grass"
+    typeFood: "grass",
+    photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7hoc7W7T44-uSy_aR_4uBQ43BSZTiCOtyJA&s"
   },
   {
     id: 2,
     species: animalSpecies[1],
     name: 'Мишка',
     dailyFoodConsumption: 90,
-    typeFood: "meat"
+    typeFood: "meat",
+    photo: "https://i.imgflip.com/2dgwnk.jpg?a477288"
   },
   {
     id: 3,
     species: animalSpecies[2],
     name: 'Гоша',
     dailyFoodConsumption: 20,
-    typeFood: "grass"
+    typeFood: "grass",
+    photo: "https://poknok.art/uploads/posts/2022-12/1672152725_1-poknok-art-p-flamingo-prikol-foto-1.jpg"
   },
   {
     id: 4,
     species: animalSpecies[3],
     name: 'Сара',
     dailyFoodConsumption: 50,
-    typeFood: "grass"
+    typeFood: "grass",
+    photo: "https://i.pinimg.com/736x/c4/66/20/c466204c9f98adccc3ce0f4b0b281c91.jpg"
   },
   {
     id: 5,
     species: animalSpecies[4],
     name: 'Мишка',
     dailyFoodConsumption: 90,
-    typeFood: "meat"
+    typeFood: "meat",
+    photo: "https://www.prikol.ru/wp-content/uploads/2017/02/fat-tiger-001.jpg"
   },
   {
     id: 6,
     species: animalSpecies[5],
     name: 'МишкаПервый',
     dailyFoodConsumption: 190,
-    typeFood: "grass"
+    typeFood: "grass",
+    photo: "https://i.ytimg.com/vi/jKKTtR5E18Q/maxresdefault.jpg"
   },
   {
     id: 7,
     species: animalSpecies[6],
     name: 'Ярик',
     dailyFoodConsumption: 20,
-    typeFood: "meat"
+    typeFood: "meat",
+    photo: "https://i.pinimg.com/originals/86/ab/7f/86ab7f6dee7b98af0852910ca545a378.jpg"
   },
   {
     id: 8,
     species: animalSpecies[7],
     name: 'Нурсултан',
     dailyFoodConsumption: 30,
-    typeFood: "meat"
+    typeFood: "meat",
+    photo: "https://img.razrisyika.ru/kart/59/232055-varan-18.jpg"
   },
   {
     id: 9,
     species: animalSpecies[8],
     name: 'Мага',
     dailyFoodConsumption: 60,
-    typeFood: "grass"
+    typeFood: "grass",
+    photo: "https://img.freepik.com/free-photo/joyful-camel-having-fun_23-2151058766.jpg"
   },
 ];
 
@@ -297,10 +308,36 @@ function amountOfFoodAllAvailableAnimalsInAllAnclosures(enclosures: Enclosure[])
   }, 0)
 }
 
-settleOrRemoveAnimalFromTheEnclosure(individualAnimals[0], enclosures[4], "settle");
+//settleOrRemoveAnimalFromTheEnclosure(individualAnimals[0], enclosures[4], "settle");
 
-const result3 = amountOfFoodAllAvailableAnimalsInAllAnclosures(enclosures);
-console.log({ result3 });
+//const result3 = amountOfFoodAllAvailableAnimalsInAllAnclosures(enclosures);
+//console.log({ result3 });
 
+
+const cardAnimal = document.querySelector('.container-animal');
+for (let animal of individualAnimals) {
+  const newDiv = document.createElement('div');
+  cardAnimal?.appendChild(newDiv);
+  newDiv.innerHTML = `
+    <div class="animal-card">
+      <img class="photo-animal" src="${animal.photo}"/>
+      <div class="name">${animal.name}</div>
+     <div class="species">${animal.species.name}</div>
+    </div>`
+
+}
+
+const enclosuresZoo = document.querySelector('.container-zoo');
+for (let enclosure of enclosures) {
+  const newDiv = document.createElement('div');
+  enclosuresZoo?.appendChild(newDiv);
+  newDiv.innerHTML = `
+  <div class="enclosure">
+     <div class="biome"> ${enclosure.biome}</div>
+     <div class="waterSource">${enclosure.waterSource}</div>
+  </div>`
+
+
+}
 
 export { };

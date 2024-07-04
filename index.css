@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.block-1, .block-2 {
+  position: relative;
+  width: 50%;
+  box-sizing: content-box;
+}
+
+.container-animal {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.enclosure {
+  gap: 30px;
+  position: relative;
+  width: 333px;
+  height: 192px;
+  background-color: cadetblue;
+  border: 10px solid azure;
+}
+
+.animal-card {
+  position: relative;
+  height: 500px;
+  width: 400px;
+}
+
+.photo-animal {
+  width: 366px;
+  height: 363px;
+}/*# sourceMappingURL=index.css.map */
